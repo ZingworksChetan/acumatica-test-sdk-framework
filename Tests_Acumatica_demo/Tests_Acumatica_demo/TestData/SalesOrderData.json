@@ -1,0 +1,28 @@
+{
+  "SalesOrder": {
+    "Customer": "ABAKERY",
+    "Description": "Create Sales Order with mandatory fields only",
+  },
+  "Details": [
+    {
+      "Item1": {
+        "Branch": "HEADOFFICE",
+        "InventoryID": "APPLES",
+        "Warehouse": "WHOLESALE",
+        "OrderQty": 10
+      }
+    },
+    {
+      "Item2": {
+        "Branch": "HEADOFFICE",
+        "InventoryID": "APJAM08",
+        "Warehouse": "WHOLESALE",
+        "OrderQty": 20
+      }
+    }
+  ],
+  "Expected": {
+    "ExpectedOrderType": "SO",
+    "OrderedQty": 30
+  }
+}

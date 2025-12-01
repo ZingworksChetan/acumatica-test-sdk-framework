@@ -1,0 +1,14 @@
+Acumatica Test SDK Release Notes:
+
+* SDK was upgraded to Selenium 4 (please refer to Selenium release notes about possible breaking changes)
+* Log is turned off by default (refer to the SDK guide for the information about logging configuration)
+* Excel comparator now compares cell styles
+* GetValue no longer returns values for hidden controls
+* Files are now being moved to a separate folder after download to support headless browsers (use Browser.Downloads api to interact with downloaded files)
+* Launcher now returns exit code, corresponding to the executed test status (0 - passed, 1 - has warnings, 2 - has errors)
+* SDK will try to search for a Config.xml in its current/parent folders
+* SDK was updated to Chrome 117 (main browser) and Firefox 91.0.2, please note several known differences
+	* SDK no longer clicks on elements, which are hidden by other elements (e.g. SDK will click on tooltip instead of requested element if tooltip is above it)
+	* Wrapper.CloseWindow method cannot close windows with alerts (known geckodriver issue 1151), you have to press Cancel before closing such windows
+	* Wrapper.Grid.ClickCell method will click on links inside cells if they fill the entire cell
+	* Added support for headless browser execution, use the following configuration option - browserheadless (true/false)

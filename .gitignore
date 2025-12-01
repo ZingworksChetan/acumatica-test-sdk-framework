@@ -1,0 +1,7 @@
+.vs
+bin/
+obj/
+*.dll
+Chrome/
+Firefox/
+Test_Result_Logs/
