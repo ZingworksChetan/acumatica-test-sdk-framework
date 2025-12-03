@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acumatica TestSDK - Beginner's Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 26px;
+            color: #667eea;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+/*        .logo {
+            width: 180px;
+            margin: 0 auto 20px;
+            display: block;
+        }*/
+
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .nav {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 2px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px;
+        }
+
+        .section h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .step-card {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #764ba2;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 40px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .code-inline {
+            background: #e9ecef;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #0c5460;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #856404;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #155724;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .checklist {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            padding: 12px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .folder-structure {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            border: 2px solid #dee2e6;
+        }
+
+        .folder-structure pre {
+            margin: 0;
+            line-height: 1.8;
+        }
+
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">ACUMATICA</div>
+            <!--<img src="C:\Users\ZingworksChetan\Downloads\Acumatica Logo.png" class="logo" />-->
+            <h1>TestSDK Setup Guide</h1>
+            <p>Complete Beginner's Onboarding Documentation</p>
+        </div>
+
+        <nav class="nav">
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#setup">Complete Setup</a></li>
+                <li><a href="#structure">Project Structure</a></li>
+                <li><a href="#wrappers">Screen Wrappers</a></li>
+                <li><a href="#writing-tests">Writing Tests</a></li>
+                <li><a href="#results">Test Results</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <section id="introduction" class="section">
+                <h2>📚 Introduction to Acumatica TestSDK</h2>
+
+                <div class="intro-box">
+                    <p><strong>Welcome to Acumatica TestSDK!</strong></p>
+                    <p>This comprehensive guide will help you understand and implement test automation for Acumatica ERP. By the end of this document, you'll have a complete understanding of installation, configuration, test creation, and execution.</p>
+                </div>
+
+                <h3>What is Acumatica TestSDK?</h3>
+                <p>Acumatica TestSDK is an automation framework provided by Acumatica that enables QA engineers, developers, and consultants to write UI automation tests for ERP screens using C#.</p>
+
+                <h3>Key Benefits</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>🔄 Automation</h4>
+                        <p>Automate repetitive testing tasks and save valuable time</p>
+                    </div>
+                    <div class="card">
+                        <h4>✅ Validation</h4>
+                        <p>Validate business logic and ensure data integrity</p>
+                    </div>
+                    <div class="card">
+                        <h4>🔍 Regression Testing</h4>
+                        <p>Perform comprehensive regression testing efficiently</p>
+                    </div>
+                    <div class="card">
+                        <h4>📸 Documentation</h4>
+                        <p>Capture detailed logs and screenshots for each test step</p>
+                    </div>
+                    <div class="card">
+                        <h4>🚀 CI/CD Integration</h4>
+                        <p>Execute tests in CI/CD environments seamlessly</p>
+                    </div>
+                    <div class="card">
+                        <h4>🎯 Screen Wrappers</h4>
+                        <p>Interact with Acumatica UI through auto-generated wrappers</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 How It Works:</strong> TestSDK interacts with the Acumatica UI through <strong>Screen Wrappers</strong> that are generated using the Test Recorder or Wrapper Generator tools.
+                </div>
+            </section>
+
+            <section id="prerequisites" class="section">
+                <h2>🛠️ Prerequisites</h2>
+
+                <p>Before starting with Acumatica TestSDK, ensure you have the following:</p>
+
+                <div class="checklist">
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>Acumatica Instance</strong> - Local or remote ERP installation
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>Visual Studio 2022+</strong> - Latest version recommended
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>.NET Framework 4.8</strong> - Required for TestSDK
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>TestSDK Package</strong> - Provided by Acumatica (version-matched)
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>Chrome Browser</strong> - For recording wrappers and test execution
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" class="checkbox">
+                        <div>
+                            <strong>Basic C# Knowledge</strong> - Understanding of C# and NUnit framework
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="setup" class="section">
+                <h2>⚙️ Complete Setup Checklist (From Scratch)</h2>
+
+                <p>Follow these steps carefully to configure your machine from zero and set up everything required to run Acumatica TestSDK successfully.</p>
+
+                <div class="step-card">
+                    <h3><span class="step-number">1</span>Install Acumatica ERP Instance</h3>
+                    <p>Install a local Acumatica ERP instance or connect to a hosted instance.</p>
+                    <div class="info-box">
+                        <strong>Note:</strong> Ensure your instance is running and accessible before proceeding.
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">2</span>Download Correct Version of Test SDK</h3>
+                    <p>Download the TestSDK version that exactly matches your Acumatica ERP build.</p>
+                    <div class="warning-box">
+                        <strong>⚠️ Important:</strong> Version mismatch between TestSDK and Acumatica ERP can cause compatibility issues.
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">3</span>Install Visual Studio & Create Solution</h3>
+                    <ul>
+                        <li>Install <strong>Visual Studio 2022+</strong></li>
+                        <li>Create a new <span class="code-inline">Console App (.NET Core)</span> project</li>
+                        <li>Choose <strong>.NET 6</strong> or <strong>.NET 7</strong></li>
+                    </ul>
+                    <div class="info-box">
+                        <strong>Project Setup:</strong> File → New → Project → Console App (.NET Core)
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">4</span>Add TestSDK NuGet Package Source</h3>
+                    <p>Configure NuGet to recognize TestSDK packages:</p>
+                    <ol>
+                        <li>Go to <span class="code-inline">Tools → NuGet Package Manager → Package Manager Settings</span></li>
+                        <li>Navigate to <span class="code-inline">Package Sources</span></li>
+                        <li>Add new source pointing to TestSDK <span class="code-inline">/Packages</span> folder</li>
+                    </ol>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">5</span>Install Required NuGet Packages</h3>
+                    <p>Install the following packages for your solution:</p>
+                    <p><span class="code-inline">Tools → NuGet Package Manager → Manage NuGet Packages for Solution</span></p>
+
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>Core</strong>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>ClassGenerator</strong>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>Execution</strong>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>PX.QA.Tools</strong>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>PX.QA.WrappersGenerator</strong>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox">
+                            <strong>GeneratedWrappers.Acumatica</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">6</span>Configure Config.xml</h3>
+                    <p>Edit the <span class="code-inline">Config.xml</span> file in the parent directory:</p>
+                    <ul>
+                        <li>Set Chrome path in <span class="code-inline">&lt;browserbin&gt;</span></li>
+                        <li>Set login credentials in <span class="code-inline">&lt;login&gt;</span> and <span class="code-inline">&lt;pswd&gt;</span></li>
+                        <li>Set output log folder path in <span class="code-inline">&lt;outputFolder&gt;</span></li>
+                        <li>Set test runner class in <span class="code-inline">&lt;testing&gt;&lt;Check Name="TestRunner"/&gt;</span></li>
+                    </ul>
+
+                    <div class="code-block">&lt;configuration&gt;
+  &lt;browserbin&gt;C:\Program Files\Google\Chrome\Application\chrome.exe&lt;/browserbin&gt;
+  &lt;login&gt;admin&lt;/login&gt;
+  &lt;pswd&gt;yourpassword&lt;/pswd&gt;
+  &lt;outputFolder&gt;C:\TestResults&lt;/outputFolder&gt;
+  &lt;testing&gt;
+    &lt;Check Name="TestRunner"/&gt;
+  &lt;/testing&gt;
+&lt;/configuration&gt;</div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">7</span>Add Config.xml Path in Project Properties</h3>
+                    <p>Configure your project to use the Config.xml file:</p>
+                    <ol>
+                        <li>Right-click on your project in Solution Explorer</li>
+                        <li>Select <span class="code-inline">Properties</span></li>
+                        <li>Navigate to <span class="code-inline">Debug</span> section</li>
+                        <li>In <span class="code-inline">Command line arguments</span>, add the full path to Config.xml</li>
+                    </ol>
+                    <div class="info-box">
+                        Example: <span class="code-inline">C:\Projects\TestSDK\Config.xml</span>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">8</span>Configure ClassGenerator.exe.config</h3>
+                    <p>Edit the <span class="code-inline">ClassGenerator.exe.config</span> file in the ClassGenerator directory:</p>
+                    <ul>
+                        <li>Set Instance Path in <span class="code-inline">&lt;SitePhysicalPath&gt;</span></li>
+                        <li>Create a new folder named <strong>'Out'</strong> in your project directory</li>
+                        <li>Set the path to this folder in <span class="code-inline">&lt;GenResultPath&gt;</span></li>
+                    </ul>
+
+                    <div class="code-block">&lt;configuration&gt;
+  &lt;appSettings&gt;
+    &lt;add key="SitePhysicalPath" value="C:\Acumatica\Site"/&gt;
+    &lt;add key="GenResultPath" value="C:\Projects\TestSDK\Out"/&gt;
+  &lt;/appSettings&gt;
+&lt;/configuration&gt;</div>
+                </div>
+
+                <div class="success-box">
+                    <strong>✅ Setup Complete!</strong> Your Acumatica TestSDK environment is now ready for test automation.
+                </div>
+            </section>
+
+            <section id="structure" class="section">
+                <h2>📁 TestSDK Project Structure</h2>
+
+                <p>Understanding the project structure is crucial for effective test development. Here's a typical TestSDK project layout:</p>
+
+                <div class="folder-structure">
+                    <pre>TestSDK
+│
+├── Program.cs              → Test runner entry point
+├── TestAcumatica.csproj    → Project file
+├── TestRunner.cs           → Executes all tests
+├── Config.xml              → Configuration file
+│
+├── GeneratedWrappers/
+│   └── Auto-generated screen wrappers
+│
+├── Tests/
+│   ├── SalesOrderTest.cs
+│   ├── CustomerTest.cs
+│   └── InventoryTest.cs
+│
+├── Logs/
+│   ├── HTML test results
+│   ├── Screenshots/
+│   └── JSON logs (optional)
+│
+└── Out/
+    └── Generated wrapper output</pre>
+                </div>
+
+                <h3>Key Components Explained</h3>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>Program.cs</h4>
+                        <p>Entry point for test execution. Initializes the test framework and starts the test runner.</p>
+                    </div>
+                    <div class="card">
+                        <h4>TestRunner.cs</h4>
+                        <p>Orchestrates test execution, manages test lifecycle, and handles reporting.</p>
+                    </div>
+                    <div class="card">
+                        <h4>GeneratedWrappers/</h4>
+                        <p>Contains auto-generated C# classes that represent Acumatica screens and their elements.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Tests/</h4>
+                        <p>Your test classes live here. Each file contains test cases for specific functionality.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Logs/</h4>
+                        <p>Test execution results, HTML reports, screenshots, and JSON logs are stored here.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Config.xml</h4>
+                        <p>Central configuration file for browser settings, credentials, and output paths.</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Best Practice:</strong> Keep your test files organized by module or functionality for easier maintenance and navigation.
+                </div>
+            </section>
+
+            <section id="wrappers" class="section">
+                <h2>🎯 Generating Screen Wrappers</h2>
+
+                <p>Screen wrappers are C# classes that represent Acumatica screens. They provide a strongly-typed interface to interact with UI elements.</p>
+
+                <h3>Why Use Screen Wrappers?</h3>
+                <ul>
+                    <li><strong>Type Safety:</strong> Compile-time checking of screen elements</li>
+                    <li><strong>IntelliSense Support:</strong> Auto-completion in Visual Studio</li>
+                    <li><strong>Maintainability:</strong> Changes to screens are reflected in generated code</li>
+                    <li><strong>Readability:</strong> Tests are easier to read and understand</li>
+                </ul>
+
+                <h3>Steps to Generate Wrappers</h3>
+
+                <div class="step-card">
+                    <h4><span class="step-number">1</span>Edit ClassGenerator.exe.config</h4>
+                    <p>Open the configuration file in your ClassGenerator directory.</p>
+                </div>
+
+                <div class="step-card">
+                    <h4><span class="step-number">2</span>Set Screen Code</h4>
+                    <p>In <span class="code-inline">&lt;FilenameFilter&gt;</span>, specify the screen code you want to generate.</p>
+                    <div class="code-block">&lt;add key="FilenameFilter" value="SO301000"/&gt;</div>
+                    <div class="info-box">
+                        <strong>Example Screen Codes:</strong>
+                        <ul>
+                            <li><strong>SO301000</strong> - Sales Order Entry</li>
+                            <li><strong>AR303000</strong> - Customer Entry</li>
+                            <li><strong>IN202500</strong> - Inventory Item Entry</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h4><span class="step-number">3</span>Save the Configuration</h4>
+                    <p>Save the ClassGenerator.exe.config file.</p>
+                </div>
+
+                <div class="step-card">
+                    <h4><span class="step-number">4</span>Generate Wrapper</h4>
+                    <p>Run <span class="code-inline">ClassGenerator.exe</span> to generate the screen wrapper.</p>
+                    <p>The generated wrapper will appear in your <strong>Out</strong> folder, then copy it to <strong>GeneratedWrappers</strong> folder in your project.</p>
+                </div>
+
+                <div class="success-box">
+                    <strong>✅ Wrapper Generated!</strong> You can now use the wrapper class in your test cases to interact with the Acumatica screen.
+                </div>
+            </section>
+
+            <section id="writing-tests" class="section">
+                <h2>✍️ Writing Your First Test Case</h2>
+
+                <p>Let's create a simple test that creates a Sales Order in Acumatica.</p>
+
+                <h3>Basic Test Structure</h3>
+
+                <div class="code-block">using Core.Log;
+using Core.TestExecution;
+using GeneratedWrappers.Acumatica;
+using NUnit.Framework;
+
+namespace Tests_Acumatica_demo.Tests
+{
+    public class SalesOrder : Check
+    {
+        SO301000_SOOrderEntry screen = new SO301000_SOOrderEntry();
+
+        public override void Execute()
+        {
+            using (TestExecution.CreateTestCaseGroup("Create Sales Order"))
+            {
+                screen.OpenScreen();
+                Log.Screenshot();
+
+                screen.DocumentDetails.ServiceOrderNbr.Type("SO0001");
+                screen.DocumentDetails.Customer.Type("TESTCUSTOMER");
+
+                screen.Actions.Save.Click();
+                Log.Screenshot();
+            }
+        }
+    }
+}</div>
+
+                <h3>Understanding the Code</h3>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>Imports</h4>
+                        <p><span class="code-inline">Core.Log</span> - For logging and screenshots<br>
+                        <span class="code-inline">Core.TestExecution</span> - Test execution framework<br>
+                        <span class="code-inline">GeneratedWrappers.Acumatica</span> - Screen wrappers</p>
+                    </div>
+                    <div class="card">
+                        <h4>Test Class</h4>
+                        <p>Inherits from <span class="code-inline">Check</span> base class. Each test class represents a test scenario.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Screen Instance</h4>
+                        <p>Creates an instance of the generated wrapper for the Sales Order Entry screen.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Execute Method</h4>
+                        <p>Contains the actual test logic. Overrides the base <span class="code-inline">Execute()</span> method.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Test Case Group</h4>
+                        <p><span class="code-inline">CreateTestCaseGroup</span> groups related actions for better reporting.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Screenshots</h4>
+                        <p><span class="code-inline">Log.Screenshot()</span> captures the current screen state for documentation.</p>
+                    </div>
+                </div>
+
+                <h3>Common Test Actions</h3>
+
+                <div class="step-card">
+                    <h4>Opening a Screen</h4>
+                    <div class="code-block">screen.OpenScreen();</div>
+                </div>
+
+                <div class="step-card">
+                    <h4>Typing in Fields</h4>
+                    <div class="code-block">screen.DocumentDetails.Customer.Type("CUSTOMER001");
+screen.DocumentDetails.Description.Type("Test Order");</div>
+                </div>
+
+                <div class="step-card">
+                    <h4>Clicking Buttons</h4>
+                    <div class="code-block">screen.Actions.Save.Click();
+screen.Actions.Release.Click();</div>
+                </div>
+
+                <div class="step-card">
+                    <h4>Taking Screenshots</h4>
+                    <div class="code-block">Log.Screenshot();
+Log.Screenshot("After saving order");</div>
+                </div>
+
+                <div class="step-card">
+                    <h4>Validating Data</h4>
+                    <div class="code-block">Assert.AreEqual("Open", screen.DocumentDetails.Status.GetValue());
+Assert.IsTrue(screen.DocumentDetails.OrderTotal.GetValue() > 0);</div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Best Practices:</strong>
+                    <ul>
+                        <li>Use meaningful test case names</li>
+                        <li>Take screenshots at key points in the test</li>
+                        <li>Add assertions to validate expected outcomes</li>
+                        <li>Group related actions using TestCaseGroup</li>
+                        <li>Keep tests independent and reusable</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="results" class="section">
+                <h2>📊 Test Results & Reporting</h2>
+
+                <p>After test execution, TestSDK generates comprehensive HTML reports with detailed information about each test run.</p>
+
+                <h3>What's Included in Reports?</h3>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>📝 Test Summary</h4>
+                        <p>Overview of all tests executed with pass/fail counts</p>
+                    </div>
+                    <div class="card">
+                        <h4>📸 Screenshots</h4>
+                        <p>Visual evidence of every logged action</p>
+                    </div>
+                    <div class="card">
+                        <h4>⏱️ Execution Time</h4>
+                        <p>Duration of each test and step</p>
+                    </div>
+                    <div class="card">
+                        <h4>✅ Pass/Fail Status</h4>
+                        <p>Clear indication of test outcomes</p>
+                    </div>
+                    <div class="card">
+                        <h4>🐛 Error Details</h4>
+                        <p>Stack traces and error messages for failures</p>
+                    </div>
+                    <div class="card">
+                        <h4>📋 Step-by-Step Log</h4>
+                        <p>Detailed log of every action performed</p>
+                    </div>
+                </div>
+
+                <h3>Report Location</h3>
+
+                <div class="folder-structure">
+                    <pre>/Logs/&lt;date-time&gt;/
+├── report.html          → Main HTML report
+├── Screenshots/
+│   ├── step_001.png
+│   ├── step_002.png
+│   └── ...
+└── logs.json            → Optional JSON logs</pre>
+                </div>
+
+                <h3>Understanding Report Structure</h3>
+
+                <div class="step-card">
+                    <h4>Test Name</h4>
+                    <p>The name of your test class and method</p>
+                </div>
+
+                <div class="step-card">
+                    <h4>Steps Executed</h4>
+                    <p>Chronological list of all actions performed during the test</p>
+                </div>
+
+                <div class="step-card">
+                    <h4>Screenshots</h4>
+                    <p>Visual snapshots taken at each <span class="code-inline">Log.Screenshot()</span> call</p>
+                </div>
+
+                <div class="step-card">
+                    <h4>Pass/Fail Status</h4>
+                    <p>Clear visual indicator showing whether the test succeeded or failed</p>
+                </div>
+
+                <div class="step-card">
+                    <h4>Error Stack Trace</h4>
+                    <p>When a test fails, detailed error information including line numbers and exception details</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Pro Tip:</strong> Review the HTML reports after each test run to verify that your tests are executing as expected. The screenshots provide valuable visual feedback.
+                </div>
+
+                <div class="success-box">
+                    <strong>🎉 Congratulations!</strong> You now have a complete understanding of Acumatica TestSDK. You're ready to start automating your Acumatica ERP testing!
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>🚀 Next Steps</h2>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>1. Practice</h4>
+                        <p>Create test cases for different Acumatica screens you use regularly</p>
+                    </div>
+                    <div class="card">
+                        <h4>2. Organize</h4>
+                        <p>Structure your tests into logical groups by module or functionality</p>
+                    </div>
+                    <div class="card">
+                        <h4>3. Automate</h4>
+                        <p>Set up automated test execution in your CI/CD pipeline</p>
+                    </div>
+                    <div class="card">
+                        <h4>4. Expand</h4>
+                        <p>Generate wrappers for additional screens as needed</p>
+                    </div>
+                    <div class="card">
+                        <h4>5. Maintain</h4>
+                        <p>Keep your tests and wrappers updated with Acumatica changes</p>
+                    </div>
+                    <div class="card">
+                        <h4>6. Share</h4>
+                        <p>Document your test cases and share knowledge with your team</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="#introduction" class="button">Back to Top</a>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer">
+            <div class="logo" style="margin-bottom: 20px;">ACUMATICA</div>
+            <h3>Acumatica TestSDK - Beginner's Guide</h3>
+            <p style="margin-top: 15px; opacity: 0.9;">Complete documentation for setting up and using Acumatica TestSDK for automated testing</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.9;">
+                Chetan Salunkhe | QA, Zingworks LLP
+            </p>
+            <!--<p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">© 2025 - Documentation Guide for New Learners</p>-->
+        </div>
+    </div>
+</body>
+</html>
