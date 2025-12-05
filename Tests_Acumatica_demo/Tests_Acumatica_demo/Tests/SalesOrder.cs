@@ -17,8 +17,8 @@ namespace Tests_Acumatica_demo.Tests
         public override void Execute()
         {
             TestExecution.CreateGroup("Sales Order Test Scenarios");
-            LoadTestData();
-            CreateSOOrder_WithValidData();
+                LoadTestData();
+                CreateSOOrder_WithValidData();
         }
 
         public JObject LoadTestData()
@@ -116,13 +116,14 @@ namespace Tests_Acumatica_demo.Tests
         }
         #endregion
 
-        private void AddLineItemsToSalesOrder(String inventoryId, String warehouse, int qty)
+        public void AddLineItemsToSalesOrder(String inventoryId, String warehouse, int qty)
         {
             soorderScreen.Transactions_grid.ClickAndAddNewRow();
             soorderScreen.Transactions_grid.Row.InventoryID.Type(inventoryId);
             soorderScreen.Transactions_grid.Row.SiteID.Type(warehouse);
             soorderScreen.Transactions_grid.Row.OrderQty.Type(qty);
         }
+
     }
 
     public class SalesOrderData

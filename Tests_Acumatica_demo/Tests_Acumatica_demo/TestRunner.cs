@@ -9,8 +9,8 @@ namespace Tests_Acumatica_demo
     {
         public class TestCase : Check
         {
-            //private SO301000_SOOrderEntry SOOrderScreen = new SO301000_SOOrderEntry();
             private SalesOrder salesOrder = new SalesOrder();
+            private GridAutomation_Test gridAutomationTest = new GridAutomation_Test();
 
             private void RunTest(string testName, Action testMethod)
             {
@@ -18,19 +18,19 @@ namespace Tests_Acumatica_demo
                 {
                     Console.WriteLine($"\nRunning: {testName}");
                     testMethod.Invoke();
-                    //Console.WriteLine($"Result: PASS");
+                    Console.WriteLine($"Result: PASS");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Result: FAIL - {ex.Message}");
                 }
             }
-
             public override void Execute()
             {
                 PxLogin.LoginToDestinationSite();
 
                 RunTest("Test 1 - Create new Sales Order", salesOrder.Execute);
+                RunTest("Test 2 - Grid Automation Test", gridAutomationTest.Execute);
             }
         }
     }
