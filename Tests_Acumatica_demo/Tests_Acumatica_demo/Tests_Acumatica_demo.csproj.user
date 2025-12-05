@@ -12,6 +12,6 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>D:\Acumatica_TestSDK\Config.xml</StartArguments>
+    <StartArguments>D:\acumatica-test-sdk-framework\Config.xml</StartArguments>
   </PropertyGroup>
 </Project>

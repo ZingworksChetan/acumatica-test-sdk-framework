@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
   <general>
-    <browserbin>D:\Acumatica_TestSDK\Chrome\chrome.exe</browserbin>
+    <browserbin>D:\acumatica-test-sdk-framework\Chrome\chrome.exe</browserbin>
     <browser_downloads_folder>c:\share\download\</browser_downloads_folder>
     <site_dst>
       <url>http://localhost/AcumaticaTestDB/</url>
@@ -9,7 +9,7 @@
       <pswd>Admin@123</pswd>
     </site_dst>
     <logging>
-        <logStorage type="htmlfile" level="INFO" outputFolder="D:\Acumatica_TestSDK\Test_Result_Logs" screenshotActive="true" />
+        <logStorage type="htmlfile" level="INFO" outputFolder="D:\acumatica-test-sdk-framework\Test_Result_Logs" screenshotActive="true" />
     </logging>
   </general>
   <testing>
